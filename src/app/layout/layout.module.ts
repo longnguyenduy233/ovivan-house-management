@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 
 import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
-import { HeaderComponent } from './header/header.component';
+import { HeaderComponent } from './components/header/header.component';
+import { FormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -13,7 +15,9 @@ import { HeaderComponent } from './header/header.component';
   ],
   imports: [
     CommonModule,
-    LayoutRoutingModule
+    FormsModule,
+    LayoutRoutingModule,
+    SharedModule
   ]
 })
 export class LayoutModule { }

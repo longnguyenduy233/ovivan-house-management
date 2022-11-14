@@ -1,0 +1,73 @@
+<section class="container list">
+    <div class="filtering">
+        <div class="criteria">
+            <div>
+                <ng-select [items]="blockNumberItems" 
+                    bindLabel="label" 
+                    bindValue="value"
+                    [clearable]="false" 
+                    (change)="onUpdateFilter()"
+                    [(ngModel)]="selectedBlockNumber">
+                </ng-select>
+            </div>
+            <div>
+                <ng-select [items]="landNumberItems" 
+                    bindLabel="label" 
+                    bindValue="value"
+                    [clearable]="false" 
+                    (change)="onUpdateFilter()"
+                    [(ngModel)]="selectedLandNumber">
+                </ng-select>
+            </div>
+            <div>
+                <ng-select [items]="minPriceItems" 
+                    bindLabel="label" 
+                    bindValue="value"
+                    [clearable]="false" 
+                    (change)="onUpdateFilter()"
+                    [(ngModel)]="selectedMinPrice">
+                </ng-select>
+            </div>
+            <div>
+                <ng-select [items]="maxPriceItems" 
+                    bindLabel="label" 
+                    bindValue="value"
+                    [clearable]="false" 
+                    (change)="onUpdateFilter()"
+                    [(ngModel)]="selectedMaxPrice">
+                </ng-select>
+            </div>
+        </div>
+        <div class="create" *ngIf="isLoggedIn$ | async">
+            <button class="create__btn" (click)="onCreateHouse()">Create new house</button>
+        </div>
+    </div>
+    <div class="model">
+        <ngb-accordion [closeOthers]="true" #acc="ngbAccordion" [activeIds]="this.houseGroupsByModel.length > 0 ? this.houseGroupsByModel[0][0]?.model?.id.toString() : ''">
+            <ng-container *ngFor="let houseGroup of houseGroupsByModel">
+                <ngb-panel [title]="houseGroup[0]?.model?.model" [id]="houseGroup[0]?.model?.id.toString()">
+                    <ng-template ngbPanelContent>
+                        <div class="row">
+                            <div class="col-6">
+                                <h2>{{houseGroup[0]?.model?.media?.title}}</h2>
+                                <p>
+                                    {{houseGroup[0]?.model?.media?.description}}
+                                </p>
+                            </div>
+                            <div class="col-6">
+                                <img class="model__img" [src]="houseGroup[0]?.model?.media?.banner" alt="">
+                            </div>
+                        </div>
+                        <div class="model__table">
+                            <app-table
+                                [columns]="columns"
+                                [tableDataOriginal]="houseGroup"
+                            >
+                            </app-table>
+                        </div>
+                    </ng-template>
+                </ngb-panel>
+            </ng-container>
+        </ngb-accordion>
+    </div>
+</section>

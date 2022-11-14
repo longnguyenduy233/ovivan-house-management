@@ -1,0 +1,47 @@
+<section class="container-fluid header">
+    <div class="container">
+        <div class="row">
+            <div class="col-6 offset-6">
+                <ng-container *ngIf="!(isLoggedIn$ | async); else isLoggedIn">
+                    <div class="login">
+                        <div class="">
+                            <input id="username" name="username" placeholder="username" [(ngModel)]="userName">
+                        </div>
+                        <div class="">
+                            <input id="password" name="password" placeholder="Password" [(ngModel)]="password">
+                        </div>
+                        <div class="">
+                            <div class="login__btn">
+                                <a
+                                    href="javascript:void(0)"
+                                    (click)="onLogin()"
+                                >
+                                    Login
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-template #isLoggedIn>
+                    <div class="logout">
+                        <a
+                            href="javascript:void(0)"
+                            (click)="onLogout()"
+                        >
+                            Logout
+                        </a>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+        <div class="row mt-3" *ngIf="error$ | async">
+            <div class="error-message">
+                <ngb-alert [dismissible]="false" type="danger">
+                    Inccorrect username or password.
+                </ngb-alert>
+            </div>
+        </div>
+    </div>
+    <hr>
+</section>

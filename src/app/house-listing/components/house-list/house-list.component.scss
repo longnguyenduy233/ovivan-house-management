@@ -1,0 +1,23 @@
+.list {
+    .filtering {
+        display: flex;
+        justify-content: space-between;
+        .criteria {
+            display: flex;
+            margin: 0 -5px;
+            & > div {
+                margin: 0 5px;
+                min-width: 120px;
+            }
+        }
+    }
+    .model {
+        margin-top: 1rem;
+        .model__img {
+            object-fit: cover;
+            width: 80%;
+            margin: 0 auto;
+            display: block;
+        }
+    }
+}

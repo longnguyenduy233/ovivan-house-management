@@ -1,0 +1,23 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th *ngFor="let column of columns" scope="col" [sortable]="column.key" (sort)="onSort($event)">{{column.label}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let row of tableData; index as i">
+            <ng-container *ngFor="let column of columns">
+                <ng-container *ngIf="column.key !== 'action'; else action">
+                    <td>{{row[column.key]}}</td>
+                </ng-container>
+                <ng-template #action>
+                    <td>
+                        <a href="javascript:void(0)" *ngIf="!column.hidden">
+                            Edit
+                        </a>
+                    </td>
+                </ng-template>
+            </ng-container>
+        </tr>
+    </tbody>
+</table>
