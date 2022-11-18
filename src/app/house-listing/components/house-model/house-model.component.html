@@ -1,57 +1,81 @@
 <section class="container house-detail">
     <div class="breadcrumb">
-        asdas
+        <a routerLink="/house-listing">House list</a> 
+        &nbsp; &gt; &nbsp; {{model.houseNumber}}
     </div>
     <div class="content">
-        <div class="house-number">
-            <h2>adasdas</h2>
-            <button>Create/ Update</button>
-        </div>
-        <div class="row">
-            <div class="col-3">
-                <div class="form-group">
-                    <label for="houseNumber">House Number:</label>
-                    <input class="form-control" type="text" id="houseNumber">
+        <form (ngSubmit)="onSubmit()" #houseForm="ngForm">
+            <div class="house-number">
+                <h2>{{model.houseNumber}}</h2>
+                <button type="submit" class="btn btn-primary" [disabled]="!houseForm.form.valid">Create/ Update</button>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="houseNumber">House Number</label>
+                        <input [(ngModel)]="model.houseNumber" name="houseNumber" #houseNumber="ngModel" required class="form-control" type="text" id="houseNumber">
+                        <div [hidden]="houseNumber.valid || houseNumber.pristine" class="alert alert-danger">
+                            House Number is required
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="blockNumber">Block Number</label>
+                        <input [(ngModel)]="model.blockNumber" name="blockNumber" #blockNumber="ngModel" required class="form-control" type="text" id="blockNumber">
+                        <div [hidden]="blockNumber.valid || blockNumber.pristine" class="alert alert-danger">
+                            Block Number is required
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="landNumber">Land Number</label>
+                        <input [(ngModel)]="model.landNumber" name="landNumber" #landNumber="ngModel" required class="form-control" type="text" id="landNumber">
+                        <div [hidden]="landNumber.valid || landNumber.pristine" class="alert alert-danger">
+                            Land Number is required
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="houseType">House type</label>
+                        <ng-select [items]="houseTypeItems" name="houseType"
+                            [clearable]="false" 
+                            placeholder="Select house type"
+                            [(ngModel)]="model.houseType">
+                        </ng-select>
+                    </div>
                 </div>
             </div>
-            <div class="col-3">
-                <div class="form-group">
-                    <label for="houseNumber">House Number:</label>
-                    <input class="form-control" type="text" id="houseNumber">
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="houseModel">House model</label>
+                        <ng-select [items]="houseModelItems" name="houseModel"
+                            [clearable]="false" 
+                            placeholder="Select house model"
+                            [(ngModel)]="model.model">
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="price">Price</label>
+                        <input [(ngModel)]="model.price" name="price" class="form-control" type="number" id="price">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <ng-select [items]="statusItems" 
+                            [clearable]="false" 
+                            placeholder="Select status" name="status"
+                            [(ngModel)]="model.status">
+                        </ng-select>
+                    </div>
                 </div>
             </div>
-            <div class="col-3">
-                <div class="form-group">
-                    <label for="houseNumber">House Number:</label>
-                    <input class="form-control" type="text" id="houseNumber">
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="form-group">
-                    <label for="houseNumber">House Number:</label>
-                    <input class="form-control" type="text" id="houseNumber">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-3">
-                <div class="form-group">
-                    <label for="houseNumber">House Number:</label>
-                    <input class="form-control" type="text" id="houseNumber">
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="form-group">
-                    <label for="houseNumber">House Number:</label>
-                    <input class="form-control" type="text" id="houseNumber">
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="form-group">
-                    <label for="houseNumber">House Number:</label>
-                    <input class="form-control" type="text" id="houseNumber">
-                </div>
-            </div>
-        </div>
+        </form>
     </div>
 </section>

@@ -18,6 +18,6 @@ export interface House {
     blockNumber: string;
     landNumber: string;
     houseType: string;
-    model: HouseModel;
+    model?: HouseModel;
     status: string;
 }

@@ -53,3 +53,9 @@ export let houses = [
         status: 'available'
     }
 ]
+
+export const masterData = {
+    houseType: ['Apartment', 'Townhouse', 'Villa'],
+    houseModel: houseModel.map(item => item.model),
+    status: ['Available', 'Blocked']
+}

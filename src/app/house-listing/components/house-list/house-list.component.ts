@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ArrayUtil } from 'src/app/core/utils/array.util';
 import { House, HouseModel } from '../../models/house-model';
 import { HouseCrudService } from '../../services/house-crud.service';
@@ -13,7 +13,7 @@ import { HouseListingFacadeService } from '../../services/house-listing.facade.s
   styleUrls: ['./house-list.component.scss'],
   providers: [HouseListingFacadeService]
 })
-export class HouseListComponent implements OnInit {
+export class HouseListComponent implements OnInit, OnDestroy {
   @ViewChild('acc', { static: true }) accordion: NgbAccordion;
   columns = [
     {
@@ -39,11 +39,12 @@ export class HouseListComponent implements OnInit {
     {
       key: 'action',
       label: 'Action',
-      hidden: false
+      hidden: true,
+      onClick: (rowData) => this.onColumActionClick(rowData)
     },
   ];
 
-  isLoggedIn$: Observable<any>;
+  isLoggedIn$: Observable<boolean>;
   houseModels: HouseModel[];
   houses: House[];
   houseGroupsByModel: House[][];
@@ -76,6 +77,7 @@ export class HouseListComponent implements OnInit {
     }
   ];
   selectedMaxPrice = this.allValue;
+  subscription = new Subscription();
 
   constructor(
     private houseListingFacadeService: HouseListingFacadeService,
@@ -84,8 +86,17 @@ export class HouseListComponent implements OnInit {
     private activatedRoute: ActivatedRoute
   ) { }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
   ngOnInit(): void {
     this.isLoggedIn$ = this.houseListingFacadeService.isLoggedIn$;
+    this.subscription.add(
+      this.houseListingFacadeService.isLoggedIn$.subscribe(rs => {
+        this.columns[this.columns.length - 1].hidden = !rs;
+      })
+    );
     this.getHouseModel();
     this.getHouse();
   }
@@ -101,8 +112,8 @@ export class HouseListComponent implements OnInit {
   getHouse() {
     this.houseCrudService.getHouses().subscribe(rs => {
       if (rs) {
-        this.houses = rs;
-        const houseGroupsByModel = ArrayUtil.groupBy(rs, house => house.model.model);
+        this.houses = rs.filter(item => item.model);
+        const houseGroupsByModel = ArrayUtil.groupBy(this.houses, house => house.model.model);
         this.houseGroupsByModel = houseGroupsByModel;
         this.getCriteria();
       }
@@ -144,8 +155,10 @@ export class HouseListComponent implements OnInit {
   }
 
   onCreateHouse() {
-    // this.router.navigate(['/offers/edit/' + res.offer.id]);
     this.router.navigate(['create'], {relativeTo: this.activatedRoute});
   }
 
+  onColumActionClick(rowData) {
+    this.router.navigate(['edit', rowData.id], {relativeTo: this.activatedRoute});
+  }
 }
