@@ -15,7 +15,7 @@ const routes: Routes = [
       {
         path: 'house-listing',
         loadChildren: () => import('../house-listing/house-listing.module').then(m => m.HouseListingModule)
-      },
+      }
     ]
   }
 ];

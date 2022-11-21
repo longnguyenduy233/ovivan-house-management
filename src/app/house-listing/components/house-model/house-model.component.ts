@@ -34,7 +34,7 @@ export class HouseModelComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
       if (params && params['id']) {
-        const id = params['id'];
+        const id = parseInt(params['id']);
         this.houseCrudService.getHouseById(id).subscribe(rs => {
           this.model = {
             houseNumber: rs.houseNumber,
